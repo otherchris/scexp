@@ -1,3 +1,4 @@
+s.reboot;
 // Start the performance
 (
   v = [

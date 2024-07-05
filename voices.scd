@@ -33,17 +33,17 @@
 
   SynthDef("myGuy",
     { 
-      arg mul1 = 0.1, mul2 = 0.1, freq = 110, offset = 0.0;
-      var env = Env.perc(level: 0.5).kr(2, doneAction: 2);
-      var snd1 = Saw.ar(freq, mul: 0.2);
-      var snd2 = Saw.ar(freq + offset , mul: 0.2);
-      Out.ar(55, snd1);
-      Out.ar(56, snd2);
+      arg mul1 = 0.1, mul2 = 0.1, freq = 110, offset = 0.0, gate = 1;
+      var env = Env.asr(0.2, 1, 0.2).kr(0, gate);
+      var snd1 = Saw.ar(freq, mul: (env / 2));
+      var snd2 = Saw.ar(freq + offset , mul: (env / 2));
+      Out.ar(0, snd1);
+      Out.ar(1, snd2);
   }).add;
 
  SynthDef("brownwind",  {
     arg freq = 400, rq = 0.03, amp = 0.9, gate = 1, rqFreq = 0.025, rqMax = 0.01, release = 10;
-    var env = Env.asr(2, amp, release).kr(release + 5, gate);
+    var env = Env.asr(2, amp, release).kr(0, gate);
     Out.ar(0, 
       BPF.ar(
         in: [BrownNoise.ar(mul: env), BrownNoise.ar(mul: env)],
@@ -55,7 +55,7 @@
 
  SynthDef("whitewind",  {
     arg freq = 400, rq = 0.03, amp = 0.9, gate = 1, rqFreq = 0.025, rqMax = 0.01, release = 10;
-    var env = Env.asr(2, amp, release).kr(release + 5, gate);
+    var env = Env.asr(2, amp, release).kr(0, gate);
     Out.ar(0, 
       BPF.ar(
         in: [BrownNoise.ar(mul: env), BrownNoise.ar(mul: env)],
@@ -67,7 +67,7 @@
 
  SynthDef("pinkwind",  {
     arg freq = 400, rq = 0.03, amp = 0.9, gate = 1, rqFreq = 0.025, rqMax = 0.01, release = 10;
-    var env = Env.asr(2, amp, release).kr(release + 5, gate);
+    var env = Env.asr(2, amp, release).kr(0, gate);
     Out.ar(0, 
       BPF.ar(
         in: [BrownNoise.ar(mul: env), BrownNoise.ar(mul: env)],
