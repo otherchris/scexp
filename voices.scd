@@ -41,14 +41,38 @@
       Out.ar(56, snd2);
   }).add;
 
- SynthDef("windinst",  {
-    arg freq = 400, rq = 0.03, gate = 1;
-    var env = Env.asr(0.5, 0.8, 2).kr(1.4, gate);
+ SynthDef("brownwind",  {
+    arg freq = 400, rq = 0.03, amp = 0.9, gate = 1, rqFreq = 0.025, rqMax = 0.01, release = 10;
+    var env = Env.asr(2, amp, release).kr(release + 5, gate);
     Out.ar(0, 
       BPF.ar(
         in: [BrownNoise.ar(mul: env), BrownNoise.ar(mul: env)],
         freq: freq, 
-        rq: SinOsc.kr(freq:0.025, mul:0.01, add: 0.0101), 
+        rq: SinOsc.kr(freq: rqFreq, mul: rqMax, add: rqMax + 0.00001), 
+      )
+    )
+  }).add;
+
+ SynthDef("whitewind",  {
+    arg freq = 400, rq = 0.03, amp = 0.9, gate = 1, rqFreq = 0.025, rqMax = 0.01, release = 10;
+    var env = Env.asr(2, amp, release).kr(release + 5, gate);
+    Out.ar(0, 
+      BPF.ar(
+        in: [BrownNoise.ar(mul: env), BrownNoise.ar(mul: env)],
+        freq: freq, 
+        rq: SinOsc.kr(freq: rqFreq, mul: rqMax, add: rqMax + 0.00001), 
+      )
+    )
+  }).add;
+
+ SynthDef("pinkwind",  {
+    arg freq = 400, rq = 0.03, amp = 0.9, gate = 1, rqFreq = 0.025, rqMax = 0.01, release = 10;
+    var env = Env.asr(2, amp, release).kr(release + 5, gate);
+    Out.ar(0, 
+      BPF.ar(
+        in: [BrownNoise.ar(mul: env), BrownNoise.ar(mul: env)],
+        freq: freq, 
+        rq: SinOsc.kr(freq: rqFreq, mul: rqMax, add: rqMax + 0.00001), 
       )
     )
   }).add;

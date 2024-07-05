@@ -42,7 +42,7 @@ Pbind(
 ).play;
 )
 
-s.record;
+s.record(duration: 30);
 thisProcess.platform.recordingsDir;
 
 
